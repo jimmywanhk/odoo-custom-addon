@@ -12,6 +12,27 @@
             </field>
     </record>
 
+    <record id="view_hospital_patient_form" model="ir.ui.view">
+            <field name="name">hospital.patient.form</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <form string="Patients">
+                    <!--
+                    2 columns view
+                    -->
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date_of_birth"/>
+                        </group>
+                        <group>
+                            <field name="gender"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+    </record>
+
     <record id="action_hospital_patient" model="ir.actions.act_window" >
         <field name="name">Patients</field>
         <field name="res_model">hospital.patient</field>
