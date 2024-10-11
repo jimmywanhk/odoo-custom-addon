@@ -2,6 +2,7 @@
 <odoo>
     <menuitem id="menu_hospital_root"
               name="HMS"
+              sequence="35"
     />
 
     <menuitem id="menu_frontdesk"
