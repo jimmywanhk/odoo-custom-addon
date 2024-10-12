@@ -14,6 +14,7 @@ class HospitalAppointment(models.Model):
     patient_id = fields.Many2one('hospital.patient', string="Patient")
     date_appointment = fields.Date(string="Date")
     note = fields.Text(string="Note")
+    state = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('ongoing', 'Ongoing'), ('done', 'Done'), ('cancel', 'Cancelled')], default="draft")
 
     @api.model_create_multi
     def create(self, vals_list):

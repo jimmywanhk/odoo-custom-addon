@@ -17,6 +17,11 @@
             <field name="model">hospital.appointment</field>
             <field name="arch" type="xml">
                 <form string="Appointments">
+                    <header>
+                        <!-- clickable status bar -->
+                        <!--  <field name="state" widget="statusbar" options="{'clickable': '1'}"/> -->
+                        <field name="state" widget="statusbar" />
+                    </header>
                     <sheet>
                         <!-- 2 columns view -->
                         <group>
