@@ -26,6 +26,10 @@
                             </group>
                             <group>
                                 <field name="gender"/>
+                                <!-- you can also add the many2many field without the widget -->
+                                <!-- a table will be shown for selection the field -->
+                                <!--<field name="tag_ids" />-->
+                                <field name="tag_ids" widget="many2many_tags"/>
                             </group>
                         </group>
                     </sheet>
