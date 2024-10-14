@@ -15,6 +15,8 @@ class HospitalAppointment(models.Model):
     date_appointment = fields.Date(string="Date")
     note = fields.Text(string="Note")
     state = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('ongoing', 'Ongoing'), ('done', 'Done'), ('cancel', 'Cancelled')], default="draft")
+    # hospital.appointment.line is the model name below
+    appoint_line_ids = fields.One2many('hospital.appointment.line', 'appointment_id', string="Lines")
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -42,3 +44,12 @@ class HospitalAppointment(models.Model):
     def action_cancel(self):
         for rec in self:
             rec.state = 'cancel'
+
+# you can add multiple models in the same file or separate file
+class HospitalAppointmentLine(models.Model):
+    _name = 'hospital.appointment.line'
+    _description = 'Hospital Appointment Line'
+
+    appointment_id = fields.Many2one('hospital.appointment', string="Appointment")
+    product_id = fields.Many2one('product.product', string="Product")
+    qty = fields.Float(string="Quantity")
