@@ -1,5 +1,5 @@
-from odoo import api, fields, models
-from odoo.addons.test_impex.models import field
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class HospitalPatient(models.Model):
@@ -26,4 +26,10 @@ class HospitalPatient(models.Model):
         #for order in self:
         #    if order.purchase_order:
         #        raise UserError(_('You cannot Delete this record'))
+        for rec in self:
+            domain = [('patient_id', '=', rec.id)]
+            appointments = self.env['hospital.appointment'].search(domain)
+            if appointments:
+                # you can also use UserError
+                raise ValidationError(_("You cannot delete the patient now.\nAppointment existing for this patient: %s" % rec.name))
         return super().unlink()
