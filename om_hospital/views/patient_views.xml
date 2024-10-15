@@ -61,6 +61,12 @@
                 <!-- we can use separator for 'and' relation -->
                 <!-- <separator/> -->
                 <filter string="Female" name="female_patients" domain="[('gender','=', 'female')]" />
+                <group expand="1" string="Group By">
+                    <filter name="group_by_gender" string="Gender" context="{'group_by' : 'gender'}"/>
+                </group>
+                <searchpanel>
+                    <field name="gender" string="Gender" enable_counters="1"/>
+                </searchpanel>
             </search>
         </field>
     </record>
@@ -70,8 +76,12 @@
         <field name="res_model">hospital.patient</field>
         <field name="view_mode">tree,form</field>
         <field name="view_ids" eval="[Command.clear(),
-        (0,0,{'view_mode':'tree', 'view_id': ref('view_hospital_patient_tree')}),
-        (0,0,{'view_mode':'form', 'view_id': ref('view_hospital_patient_form')})]"/>
+            (0,0,{'view_mode':'tree', 'view_id': ref('view_hospital_patient_tree')}),
+            (0,0,{'view_mode':'form', 'view_id': ref('view_hospital_patient_form')})]"/>
+        <field name="search_view_id" ref="view_hospital_patient_search"/>
+        <field name="context">{'search_default_male_patients':1}</field>
+        <!-- you can also add default group by filter -->
+        <!-- <field name="context">{'search_default_group_by_gender':1}</field> -->
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a new patient
