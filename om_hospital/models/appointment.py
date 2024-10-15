@@ -32,7 +32,8 @@ class HospitalAppointment(models.Model):
 
     # we can add "store=True" attribute to store the field in the database
     # there are 2 types of related field, store or non-store
-    date_of_birth = fields.Date(related='patient_id.date_of_birth', store=True)
+    # only user group 'om_hospital.group_hospital_doctors' can see the field, including filter by and group by
+    date_of_birth = fields.Date(related='patient_id.date_of_birth', store=True, groups="om_hospital.group_hospital_doctors")
 
     @api.model_create_multi
     def create(self, vals_list):
