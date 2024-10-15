@@ -18,18 +18,29 @@ class HospitalPatient(models.Model):
     # the column name 'patient_id' and 'tag_id'
     tag_ids = fields.Many2many('patient.tag', 'patient_tag_rel', 'patient_id', 'tag_id', string="Tags")
 
-    # inherit unlink method
-    # unlink method delete the record based on the given ID
-    # you can add some logic here when deleting the record
-    def unlink(self):
-        print("super method is executed")
-        #for order in self:
-        #    if order.purchase_order:
-        #        raise UserError(_('You cannot Delete this record'))
+    @api.ondelete(at_uninstall=False)
+    def _check_patient_appointments(self):
         for rec in self:
             domain = [('patient_id', '=', rec.id)]
             appointments = self.env['hospital.appointment'].search(domain)
             if appointments:
                 # you can also use UserError
-                raise ValidationError(_("You cannot delete the patient now.\nAppointment existing for this patient: %s" % rec.name))
-        return super().unlink()
+                raise ValidationError(
+                    _("You cannot delete the patient now.\nAppointment existing for this patient: %s" % rec.name))
+
+
+    # inherit unlink method
+    # unlink method delete the record based on the given ID
+    # you can add some logic here when deleting the record
+    # def unlink(self):
+    #   print("super method is executed")
+    #    #for order in self:
+    #    #    if order.purchase_order:
+    #    #        raise UserError(_('You cannot Delete this record'))
+    #    for rec in self:
+    #        domain = [('patient_id', '=', rec.id)]
+    #        appointments = self.env['hospital.appointment'].search(domain)
+    #        if appointments:
+    #            # you can also use UserError
+    #            raise ValidationError(_("You cannot delete the patient now.\nAppointment existing for this patient: %s" % rec.name))
+    #    return super().unlink()
