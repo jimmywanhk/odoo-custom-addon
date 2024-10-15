@@ -24,6 +24,10 @@ class HospitalAppointment(models.Model):
     # there are 2 types of compute field, store or non-store
     total_qty = fields.Float(compute='_compute_total_qty', string="Total Quantity", store=True)
 
+    # we can add "store=True" attribute to store the field in the database
+    # there are 2 types of related field, store or non-store
+    date_of_birth = fields.Date(related='patient_id.date_of_birth', store=True)
+
     @api.model_create_multi
     def create(self, vals_list):
         print("odoo mates", vals_list)
