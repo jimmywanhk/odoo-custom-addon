@@ -23,9 +23,16 @@
                             <group>
                                 <field name="name"/>
                                 <field name="date_of_birth"/>
+                                <field name="is_minor"/>
+                                <!-- 3 attributes can be used -->
+                                <!-- invisible="1" -->
+                                <!-- readonly="1" -->
+                                <!-- required="1" -->
+                                <field name="guardian" invisible="not is_minor" required="is_minor"/>
                             </group>
                             <group>
                                 <field name="gender"/>
+                                <field name="weight" readonly="gender == 'female'"/>
                                 <!-- you can also add the many2many field without the widget -->
                                 <!-- a table will be shown for selection the field -->
                                 <!--<field name="tag_ids" />-->

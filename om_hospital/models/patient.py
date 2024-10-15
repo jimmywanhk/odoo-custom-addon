@@ -17,6 +17,9 @@ class HospitalPatient(models.Model):
     # you can specify the table name 'patient_tag_rel'
     # the column name 'patient_id' and 'tag_id'
     tag_ids = fields.Many2many('patient.tag', 'patient_tag_rel', 'patient_id', 'tag_id', string="Tags")
+    is_minor = fields.Boolean(string="Minor")
+    guardian = fields.Char(string="Guardian")
+    weight = fields.Float(string="Weight")
 
     @api.ondelete(at_uninstall=False)
     def _check_patient_appointments(self):
