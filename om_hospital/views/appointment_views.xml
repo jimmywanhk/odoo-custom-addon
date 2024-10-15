@@ -35,7 +35,7 @@
                                 <field name="date_appointment"/>
                             </group>
                             <group>
-
+                                <field name="total_qty"/>
                             </group>
                         </group>
 

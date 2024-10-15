@@ -19,6 +19,11 @@ class HospitalAppointment(models.Model):
     # hospital.appointment.line is the model name below
     appoint_line_ids = fields.One2many('hospital.appointment.line', 'appointment_id', string="Lines")
 
+    # _compute_total_qty is the function name
+    # we can add "store=True" attribute to store the field in the database
+    # there are 2 types of compute field, store or non-store
+    total_qty = fields.Float(compute='_compute_total_qty', string="Total Quantity", store=True)
+
     @api.model_create_multi
     def create(self, vals_list):
         print("odoo mates", vals_list)
@@ -27,6 +32,17 @@ class HospitalAppointment(models.Model):
                 vals['reference'] = self.env['ir.sequence'].next_by_code('hospital.appointment')
         return super().create(vals_list)
 
+    # when you create a stored compute field, you need to specify
+    # the dependency when the field recompute
+    @api.depends('appoint_line_ids', 'appoint_line_ids.qty')
+    def _compute_total_qty(self):
+        for rec in self:
+            rec.total_qty = sum(rec.appoint_line_ids.mapped('qty'))
+            #total_qty = 0
+            #print(rec.appoint_line_ids)
+            #for line in rec.appoint_line_ids:
+            #    total_qty += line.qty
+            #rec.total_qty = total_qty
 
     def _compute_display_name(self):
         for rec in self:
@@ -58,5 +74,5 @@ class HospitalAppointmentLine(models.Model):
     _description = 'Hospital Appointment Line'
 
     appointment_id = fields.Many2one('hospital.appointment', string="Appointment")
-    product_id = fields.Many2one('product.product', string="Product")
+    product_id = fields.Many2one('product.product', string="Product", required=True)
     qty = fields.Float(string="Quantity")
