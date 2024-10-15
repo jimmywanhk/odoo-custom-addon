@@ -12,7 +12,13 @@ class HospitalAppointment(models.Model):
     _rec_name = 'patient_id'
 
     reference = fields.Char(string="Reference", default="New")
-    patient_id = fields.Many2one('hospital.patient', string="Patient")
+
+    # ondelete policy
+    # 1. 'restrict' : cannot delete the patient that has appointments
+    # 2. 'cascade'  : delete the patient will also delete the related appointments
+    # 3. 'set null' (required must be false) : delete the patient, the patient in the appointments will set to null
+    patient_id = fields.Many2one('hospital.patient', string="Patient", required=False, ondelete='cascade')
+
     date_appointment = fields.Date(string="Date")
     note = fields.Text(string="Note")
     state = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('ongoing', 'Ongoing'), ('done', 'Done'), ('cancel', 'Cancelled')], default="draft")
