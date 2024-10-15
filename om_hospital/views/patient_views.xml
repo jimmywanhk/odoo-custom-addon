@@ -57,6 +57,10 @@
                 <field name="date_of_birth" />
                 <field name="gender" />
                 <field name="guardian" />
+                <filter string="Male" name="male_patients" domain="[('gender','=', 'male')]" />
+                <!-- we can use separator for 'and' relation -->
+                <!-- <separator/> -->
+                <filter string="Female" name="female_patients" domain="[('gender','=', 'female')]" />
             </search>
         </field>
     </record>
