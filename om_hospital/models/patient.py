@@ -17,3 +17,13 @@ class HospitalPatient(models.Model):
     # you can specify the table name 'patient_tag_rel'
     # the column name 'patient_id' and 'tag_id'
     tag_ids = fields.Many2many('patient.tag', 'patient_tag_rel', 'patient_id', 'tag_id', string="Tags")
+
+    # inherit unlink method
+    # unlink method delete the record based on the given ID
+    # you can add some logic here when deleting the record
+    def unlink(self):
+        print("super method is executed")
+        #for order in self:
+        #    if order.purchase_order:
+        #        raise UserError(_('You cannot Delete this record'))
+        return super().unlink()
