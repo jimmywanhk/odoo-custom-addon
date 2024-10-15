@@ -5,7 +5,8 @@
     "version": "17.0.1.1",
     "depends": [
         'mail',
-        'product'
+        'product',
+        'account'
     ],
     "data": [
         "security/security.xml",
